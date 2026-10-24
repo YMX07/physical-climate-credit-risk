@@ -91,10 +91,10 @@ idiosyncratic factor $`B`$. The paper adds a **one-off downward jump**:
 
 - $`q`$ is the probability of a climate event above a "normal" threshold over the horizon, for example a Category 3+
   hurricane. It is **external**, supplied by a meteorological model, and **the same for all obligors**.
-- $`e^{-\alpha}<1`$ is the share of asset value left after the event. $`\alpha`$ depends on the borrower.
+- $`e^{-\alpha}\lt 1`$ is the share of asset value left after the event. $`\alpha`$ depends on the borrower.
 - Because $`V_t`$ is a GBM, the timing of the jump does not matter. It can be treated as happening at maturity.
 
-Default happens when $`\hat V_T < L`$. Normalising the asset return gives
+Default happens when $`\hat V_T \lt  L`$. Normalising the asset return gives
 
 ```math
 P_D = (1-q)\,\Phi(C^*) + q\,\Phi(C^*+\hat\alpha),\qquad
@@ -127,7 +127,7 @@ Once $`q`$ is given, the two PDs fix $`\hat\alpha`$, so no separate calibration 
 
 ```math
 \hat\alpha = \Phi^{-1}\!\Big(\frac{P_D-(1-q)P_D^0}{q}\Big) - \Phi^{-1}(P_D^0),
-\qquad \text{valid for } P_D^0 \le P_D < (1-q)P_D^0+q .
+\qquad \text{valid for } P_D^0 \le P_D \lt  (1-q)P_D^0+q .
 ```
 
 To get the asset jump itself, multiply by asset volatility: $`\alpha=\hat\alpha\cdot\sigma_A`$ (Annex 1).
@@ -161,7 +161,7 @@ Each channel is a Vasicek-type portfolio, and the paper applies Vasicek's 1987 a
 sum collapses to a step function. The result is the main formula of the paper:
 
 ```math
-P(\text{Loss}<L) = q\,\Phi\Big(\frac{\sqrt{1-\rho}\,\Phi^{-1}(\Theta_1)-\Phi^{-1}(P_D^0)}{\sqrt\rho}-\frac{\hat\alpha}{\sqrt\rho}\Big)
+P(\text{Loss}\lt L) = q\,\Phi\Big(\frac{\sqrt{1-\rho}\,\Phi^{-1}(\Theta_1)-\Phi^{-1}(P_D^0)}{\sqrt\rho}-\frac{\hat\alpha}{\sqrt\rho}\Big)
 +(1-q)\,\Phi\Big(\frac{\sqrt{1-\rho}\,\Phi^{-1}(\Theta_0)-\Phi^{-1}(P_D^0)}{\sqrt\rho}\Big) \qquad (14)
 ```
 
@@ -268,7 +268,7 @@ loan.summary()       # all of the above as a dict
 The binary event generalises to states $`\{q_i,\alpha_i\}_{i=0}^{n-1}`$, for example hurricane categories:
 
 ```math
-P(\text{Loss}<L)=\sum_i q_i\,\Phi\Big(\frac{\sqrt{1-\rho}\,\Phi^{-1}(L/LGD_i)-\Phi^{-1}_{\{q,\hat\alpha\}}(P_D)}{\sqrt\rho}-\frac{\hat\alpha_i}{\sqrt\rho}\Big),
+P(\text{Loss}\lt L)=\sum_i q_i\,\Phi\Big(\frac{\sqrt{1-\rho}\,\Phi^{-1}(L/LGD_i)-\Phi^{-1}_{\{q,\hat\alpha\}}(P_D)}{\sqrt\rho}-\frac{\hat\alpha_i}{\sqrt\rho}\Big),
 \qquad \Phi_{\{q,\hat\alpha\}}(x)=\sum_i q_i\,\Phi(x+\hat\alpha_i)
 ```
 
@@ -469,12 +469,12 @@ no longer independent.
 [correlated.py](climate_credit/correlated.py) links them with a Gaussian copula. A latent climate variable
 
 ```math
-W = \tau\,y + \sqrt{1-\tau^2}\,\varepsilon,\qquad \xi = \mathbf 1\{W > \Phi^{-1}(1-q)\}
+W = \tau\,y + \sqrt{1-\tau^2}\,\varepsilon,\qquad \xi = \mathbf 1\{W \gt  \Phi^{-1}(1-q)\}
 ```
 
 fires the event, where $`y=-S`$ is the economic stress factor (high $`y`$ means a bad state) and $`\varepsilon`$ is independent noise.
 - The marginal $`P(\xi=1)=q`$ is unchanged.
-- $`\tau>0`$ makes events more likely in downturns: $`q(y)=\Phi\big((\tau y-\Phi^{-1}(1-q))/\sqrt{1-\tau^2}\big)`$.
+- $`\tau\gt 0`$ makes events more likely in downturns: $`q(y)=\Phi\big((\tau y-\Phi^{-1}(1-q))/\sqrt{1-\tau^2}\big)`$.
 - $`\tau=0`$ is exactly the paper's model, and the tests check this.
 
 Since $`\mathrm{corr}(A,W)=-\sqrt\rho\,\tau`$, every quantity is still closed form in the bivariate normal CDF $`\Phi_2`$:
@@ -484,7 +484,7 @@ P_D = \Phi_2(C^*,k;-\sqrt\rho\tau) + \Phi(C^*+\hat\alpha) - \Phi_2(C^*+\hat\alph
 ```
 
 ```math
-P(\text{Loss}<L) = \Phi_2\big(y_0(L),k;\tau\big) + \Phi\big(y_1(L)\big) - \Phi_2\big(y_1(L),k;\tau\big)
+P(\text{Loss}\lt L) = \Phi_2\big(y_0(L),k;\tau\big) + \Phi\big(y_1(L)\big) - \Phi_2\big(y_1(L),k;\tau\big)
 ```
 
 Here $`y_j(L)=\big(\sqrt{1-\rho}\,\Phi^{-1}(L/LGD_j)-C^*-\hat\alpha_j\big)/\sqrt\rho`$ is the economic factor at which channel $`j`$ loses $`L`$.
