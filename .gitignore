@@ -1,0 +1,21 @@
+# The BIS paper is copyrighted; keep the local copy out of the repo
+paper/
+
+# Generated figures (recreate with the example scripts)
+outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv/
+venv/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

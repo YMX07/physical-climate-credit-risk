@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it, and the original paper, as below."
+title: "climate-credit: physical climate risk in the Vasicek / IRB credit risk model"
+type: software
+version: 0.1.0
+date-released: 2026-10-24
+license: MIT
+authors:
+  - family-names: Moumna
+    given-names: Youssef
+repository-code: https://github.com/YMX07/physical-climate-credit-risk
+keywords:
+  - climate risk
+  - physical risk
+  - credit risk
+  - Vasicek model
+  - Basel IRB
+references:
+  - type: report
+    title: "Incorporating physical climate risks into banks' credit risk models"
+    authors:
+      - family-names: Pozdyshev
+        given-names: Vasily
+      - family-names: Lobanov
+        given-names: Alexey
+      - family-names: Ilinsky
+        given-names: Kirill
+    institution:
+      name: Bank for International Settlements
+    collection-title: BIS Working Papers
+    number: "1274"
+    year: 2025
+    month: 7
+    url: "https://www.bis.org/publications/working-paper-1274-incorporating-physical-climate-risks-banks-credit-risk-models"

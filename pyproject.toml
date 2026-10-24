@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "climate-credit"
+version = "0.1.0"
+description = "Physical climate risk in the Vasicek / Basel IRB credit risk model: an implementation and stress test of BIS Working Paper 1274"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Youssef Moumna" }]
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "scipy>=1.10"]
+keywords = ["climate risk", "physical risk", "credit risk", "Vasicek", "Basel", "IRB", "ASRF"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.urls]
+Repository = "https://github.com/YMX07/physical-climate-credit-risk"
+Paper = "https://www.bis.org/publications/working-paper-1274-incorporating-physical-climate-risks-banks-credit-risk-models"
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+dev = ["matplotlib>=3.7", "pytest>=7"]
+
+[tool.setuptools]
+packages = ["climate_credit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
